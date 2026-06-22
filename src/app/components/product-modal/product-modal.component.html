@@ -1,0 +1,29 @@
+<div class="modal-overlay" (click)="onOverlayClick($event)">
+  <div class="modal">
+    <button class="modal__close" (click)="close.emit()">✕</button>
+
+    <div class="modal__img-wrap">
+      <img [src]="product().image" [alt]="product().title" class="modal__img" />
+    </div>
+
+    <div class="modal__content">
+      <span class="modal__badge">{{ categoryIcon }} {{ product().category }}</span>
+      <h2 class="modal__title">{{ product().title }}</h2>
+
+      <div class="modal__rating">
+        @for (star of stars; track star; let i = $index) {
+          <span class="star" [class.filled]="i < product().rating.rate">★</span>
+        }
+        <span class="rating-num">{{ product().rating.rate.toFixed(1) }}</span>
+        <span class="rating-count">· {{ product().rating.count }} reviews</span>
+      </div>
+
+      <p class="modal__desc">{{ product().description }}</p>
+
+      <div class="modal__footer">
+        <span class="modal__price">${{ product().price.toFixed(2) }}</span>
+        <button class="btn-add">Add to Cart 🛒</button>
+      </div>
+    </div>
+  </div>
+</div>

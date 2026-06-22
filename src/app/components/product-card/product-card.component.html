@@ -1,0 +1,28 @@
+<article class="card" (click)="onViewDetails()">
+  <div class="card__badge">{{ categoryIcon }} {{ product().category }}</div>
+
+  <div class="card__img-wrap">
+    <img [src]="product().image" [alt]="product().title" class="card__img" loading="lazy" />
+  </div>
+
+  <div class="card__body">
+    <h3 class="card__title">{{ truncate(product().title, 55) }}</h3>
+
+    <p class="card__desc">{{ truncate(product().description) }}</p>
+
+    <div class="card__rating">
+      @for (star of stars; track star; let i = $index) {
+        <span class="star" [class.filled]="i < product().rating.rate">★</span>
+      }
+      <span class="rating-num">{{ product().rating.rate.toFixed(1) }}</span>
+      <span class="rating-count">({{ product().rating.count }})</span>
+    </div>
+
+    <div class="card__footer">
+      <span class="card__price">${{ product().price.toFixed(2) }}</span>
+      <button class="btn-details" (click)="$event.stopPropagation(); onViewDetails()">
+        View Details →
+      </button>
+    </div>
+  </div>
+</article>

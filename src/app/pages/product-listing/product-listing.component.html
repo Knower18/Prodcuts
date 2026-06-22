@@ -1,0 +1,132 @@
+<div class="page">
+
+  <!-- Hero Header -->
+  <header class="hero">
+    <div class="hero__inner">
+      <p class="hero__eyebrow">✦ Discover &amp; Shop</p>
+      <h1 class="hero__title">The <em>Store</em></h1>
+      <p class="hero__sub">{{ allProducts().length }} products across {{ categories().length }} categories</p>
+    </div>
+  </header>
+
+  <!-- Controls -->
+  <section class="controls">
+    <div class="controls__inner">
+      <!-- Search -->
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input
+          class="search-input"
+          type="text"
+          placeholder="Search products…"
+          [value]="searchQuery()"
+          (input)="onSearch($any($event.target).value)"
+        />
+        @if (searchQuery()) {
+          <button class="search-clear" (click)="onSearch('')">✕</button>
+        }
+      </div>
+
+      <!-- Category pills -->
+      <div class="categories">
+        <button
+          class="cat-pill"
+          [class.active]="activeCategory() === 'all'"
+          (click)="setCategory('all')"
+        >All</button>
+
+        @for (cat of categories(); track cat) {
+          <button
+            class="cat-pill"
+            [class.active]="activeCategory() === cat"
+            (click)="setCategory(cat)"
+          >{{ cat }}</button>
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Results bar -->
+  @if (!loading() && !error()) {
+    <div class="results-bar">
+      <span>{{ filtered().length }} result{{ filtered().length !== 1 ? 's' : '' }}</span>
+      @if (searchQuery() || activeCategory() !== 'all') {
+        <button class="clear-filters" (click)="onSearch(''); setCategory('all')">Clear filters</button>
+      }
+    </div>
+  }
+
+  <!-- Loading skeleton -->
+  @if (loading()) {
+    <div class="grid">
+      @for (n of [1,2,3,4,5,6,7,8]; track n) {
+        <div class="skeleton-card">
+          <div class="skeleton skeleton--img"></div>
+          <div class="skeleton skeleton--line"></div>
+          <div class="skeleton skeleton--line sk-short"></div>
+          <div class="skeleton skeleton--line sk-price"></div>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- Error state -->
+  @if (error()) {
+    <div class="error-state">
+      <span class="error-icon">⚠️</span>
+      <p>{{ error() }}</p>
+      <button class="btn-retry" (click)="retry()">Try Again</button>
+    </div>
+  }
+
+  <!-- Product grid -->
+  @if (!loading() && !error()) {
+    @if (paginated().length > 0) {
+      <div class="grid">
+        @for (product of paginated(); track product.id) {
+          <app-product-card [product]="product" (viewDetails)="openModal($event)" />
+        }
+      </div>
+
+      <!-- Pagination -->
+      @if (totalPages() > 1) {
+        <nav class="pagination">
+          <button
+            class="page-btn"
+            [disabled]="currentPage() === 1"
+            (click)="goToPage(currentPage() - 1)"
+          >‹</button>
+
+          @for (page of pageNumbers(); track page) {
+            <button
+              class="page-btn"
+              [class.active]="page === currentPage()"
+              (click)="goToPage(page)"
+            >{{ page }}</button>
+          }
+
+          <button
+            class="page-btn"
+            [disabled]="currentPage() === totalPages()"
+            (click)="goToPage(currentPage() + 1)"
+          >›</button>
+        </nav>
+      }
+    } @else {
+      <div class="empty-state">
+        <span>🔦</span>
+        <p>No products match your search.</p>
+        <button class="btn-retry" (click)="onSearch(''); setCategory('all')">Reset filters</button>
+      </div>
+    }
+  }
+
+  <!-- Modal -->
+  @if (selectedProduct()) {
+    <app-product-modal
+      [product]="selectedProduct()!"
+      (close)="closeModal()"
+    />
+  }
+
+</div>

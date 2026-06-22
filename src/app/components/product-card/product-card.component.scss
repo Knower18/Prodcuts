@@ -1,0 +1,129 @@
+.card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #f0eef9;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(99, 62, 200, 0.15);
+
+    .card__img { transform: scale(1.06); }
+    .btn-details { background: #633ec8; color: #fff; }
+  }
+}
+
+.card__badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(6px);
+  border: 1px solid #e8e2f8;
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #633ec8;
+  text-transform: capitalize;
+  letter-spacing: 0.02em;
+}
+
+.card__img-wrap {
+  height: 220px;
+  background: #f8f6ff;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.card__img {
+  max-height: 180px;
+  max-width: 100%;
+  object-fit: contain;
+  transition: transform 0.35s ease;
+}
+
+.card__body {
+  padding: 18px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+
+.card__title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #1a1230;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.card__desc {
+  font-size: 0.8rem;
+  color: #7c7095;
+  line-height: 1.6;
+  margin: 0;
+  flex: 1;
+}
+
+.card__rating {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+
+  .star {
+    color: #ddd;
+    font-size: 0.85rem;
+    &.filled { color: #f5a623; }
+  }
+
+  .rating-num {
+    margin-left: 6px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #1a1230;
+  }
+
+  .rating-count {
+    font-size: 0.75rem;
+    color: #a09ab8;
+    margin-left: 2px;
+  }
+}
+
+.card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+
+.card__price {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #633ec8;
+  font-family: 'Inter', sans-serif;
+}
+
+.btn-details {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1.5px solid #633ec8;
+  background: transparent;
+  color: #633ec8;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
